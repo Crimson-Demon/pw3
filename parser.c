@@ -1,7 +1,6 @@
 #include "parser.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "util.h"
 #include "validator.h"
 
@@ -10,15 +9,17 @@ bool parseInputParameters(char* line, int params[3]) {
     params[0] = atoi(results[0]);
     params[1] = atoi(results[1]);
     params[2] = atoi(results[2]);
+    for(int i = 0; *(results + i); i++)
+        free(*(results + i));
     free(results);
     return true;
 }
 
-bool parseCircuitEquation(char* line) {
+CircuitGraph* parseCircuitEquation(char* line) {
     
 }
 
-bool parseInitialisationList(char* line) {
+int** parseInitialisationList(char* line) {
 
 }
 
@@ -37,7 +38,8 @@ void parse() {
     int N = params[0];
     int K = params[1];
     int V = params[2];
-    free(line);
+    if(line)
+        free(line);
 
     for(int i = 0; i < K; i++) {
         read = getline(&line, &len, stdin);
@@ -46,7 +48,8 @@ void parse() {
             fprintf(stderr, "Reading error!");
         #endif // D_DEBUG
         parseCircuitEquation(line);
-        free(line);
+        if(line)
+            free(line);
     }
 
     for(int i = K; i < N; i++) {
@@ -56,6 +59,7 @@ void parse() {
             fprintf(stderr, "Reading error!");
         #endif // D_DEBUG
         parseInitialisationList(line);
-        free(line);
+        if(line)
+            free(line);
     }
 }
