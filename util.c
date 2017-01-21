@@ -4,6 +4,17 @@
 #include <string.h>
 #include <assert.h>
 
+PairInt* createPairInt(int first, int second) {
+    PairInt* pairInt = malloc(sizeof(PairInt));
+    pairInt->first = first;
+    pairInt->second = second;
+    return pairInt;
+}
+
+void deletePairInt(PairInt* pairInt) {
+    free(pairInt);
+}
+
 char** str_split(char* a_str, const char a_delim) {
     char** result = 0;
     size_t count = 0;
