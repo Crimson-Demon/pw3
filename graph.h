@@ -3,19 +3,33 @@
 
 typedef struct CircuitVertex CircuitVertex;
 
-typedef struct CircuitVertex {
-    int numOfEdges;
+struct CircuitVertex {
+    int numOfOutgoingEdges;
+    int numOfIngoingEdges;
     int varName;
     char* expr;
-    CircuitVertex** vertices;
-} CircuitVertex;
+    CircuitVertex** ingoingVertices;
+    CircuitVertex** outgoingVertices;
+};
 
+CircuitVertex* createCircuitVertex(int varName, char* expr);
 
+void addOutgoingVertex(CircuitVertex* vertex1, CircuitVertex* vertex2);
+
+void deleteCircuitVertex(CircuitVertex* vertex);
 
 typedef struct CircuitGraph {
-    int maxNumOfVars;
-    char** vars;
+    int numOfVars;
+    int numOfNodes;
+    int* vars;
+    CircuitVertex** varVertices;
     CircuitVertex* root;
 } CircuitGraph;
+
+CircuitGraph* createCircuitGraph();
+
+void deleteCircuitGraph(CircuitGraph* graph);
+
+CircuitVertex* findVarVertex(CircuitGraph* graph, int i);
 
 #endif // GRAPH_H
